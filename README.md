@@ -17,7 +17,28 @@ Based on the script by Bart J. Smit, 'ObecalpEffect' and Franco Fichtner, forked
 
 ## Config
 
+The configuration file `config.yml` has three main sections (see `config.yml.example`). The already filled in values in the example config are the defaults.
 
+```yaml
+emitter: telegram
+```
+
+The `emitter` refers to one of the emitters in `emitters`. 
+
+```yaml
+emitters:
+  - telegram:
+    token:
+    chatid:
+```
+
+`token` is the token for the Telegram bot, which is provided by creating a bot by following the steps provided in the [Telegram bot API documentation](https://core.telegram.org/bots#3-how-do-i-create-a-bot).
+
+`chatid` is the unique identifier for the target chat. It can be obtained by messaging the bot and executing the following command (replace `$BOT_TOKEN`). The ID may be found at `"chat": {"id": 12345678},`:
+
+```sh
+curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates | python -m json.tool
+```
 
 ## Setup
 
