@@ -1,23 +1,10 @@
 #!/usr/local/bin/python
 
-###################################################################
-# This script makes an API connection to OPNsense                 #
-# and checks if there are any pending updates                     #
-# if there are, it sends an email with details                    #
-#                                                                 #
-# Authors: Bart J. Smit, 'ObecalpEffect' and Franco Fichtner      #
-#                                                                 #
-# Version 1.2     07/05/2016                                      #
-#                                                                 #
-###################################################################
-
-# import libraries
 import json
 import requests
 import smtplib
 from email.utils import formatdate
 
-# define endpoint and credentials 
 api_key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 api_secret = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 host = 'firewall.host.name'
@@ -33,7 +20,6 @@ message += 'Content-type: text/html\r\n'
 message += 'Subject: Updates for OPNsense\r\n'
 message += formatdate(localtime=True) + '\r\n'
 
-# request data
 r = requests.get(url,verify=True,auth=(api_key, api_secret))
 if r.status_code == 200:
     response = json.loads(r.text)
