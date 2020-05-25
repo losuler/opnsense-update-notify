@@ -1,0 +1,12 @@
+---
+
+emitter: telegram
+
+emitters:
+  - telegram:
+    token:
+    chatid:
+
+opnsense:
+  host:
+  self_signed: yes
