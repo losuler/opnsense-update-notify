@@ -6,20 +6,7 @@ import pyyaml
 import smtplib
 from email.utils import formatdate
 
-api_key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-api_secret = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-host = 'firewall.host.name'
-recipients = 'your@email.address'
-rcpt_name = 'Your Name'
-
 url = 'https://' + host + '/api/core/firmware/status'
-sender = 'root@' + host
-message  = 'From: OPNsense Firewall <root@' + host + '>\r\n'
-message += 'To: ' + rcpt_name + '<' + recipients + '>\r\n'
-message += 'MIME-Version: 1.0\r\n'
-message += 'Content-type: text/html\r\n'
-message += 'Subject: Updates for OPNsense\r\n'
-message += formatdate(localtime=True) + '\r\n'
 
 r = requests.get(url,verify=True,auth=(api_key, api_secret))
 if r.status_code == 200:
@@ -57,8 +44,6 @@ if r.status_code == 200:
         message += '<br>Click <a href=\"https://' + host + '/ui/core/firmware/\">here</a> to fetch them.<br>\r\n'
         if response['upgrade_needs_reboot'] == '1':
             message += '<h3>This requires a reboot</h3>'
-        s = smtplib.SMTP('localhost')
-        s.sendmail(sender,recipients,message)
 else:
     print ('Connection / Authentication issue, response received:')
     print r.text
