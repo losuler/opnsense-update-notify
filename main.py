@@ -3,8 +3,6 @@
 import json
 import requests
 import pyyaml
-import smtplib
-from email.utils import formatdate
 
 url = 'https://' + host + '/api/core/firmware/status'
 
