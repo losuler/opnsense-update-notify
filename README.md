@@ -33,7 +33,7 @@ It's recommended to create a user with access restricted to the API endpoints re
 
     3. Then under `Group Memberships` click the previously created group and click `Add groups` (`->`).
 
-5. After creating the new user, click on `Edit`. Under `API keys` click `Create API key` (`+`).
+5. After creating the new user, click on `Edit`. Under `API keys` click `Create API key` (`+`). Your browser will prompt you to download or open a text file. This file will have the `api_key` and `api_secret` values used in the config (see the [config](#config) below.
 
 ## Config
 
