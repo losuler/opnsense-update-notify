@@ -2,6 +2,7 @@
 
 import json
 import requests
+import pyyaml
 import smtplib
 from email.utils import formatdate
 
