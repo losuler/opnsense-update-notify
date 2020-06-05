@@ -8,6 +8,7 @@ authors = ["losuler <losuler@posteo.net>"]
 python = "^3.7"
 requests = "^2.23"
 pyyaml = "^5.3"
+yamale = "^2.1"
 
 [tool.poetry.dev-dependencies]
 
