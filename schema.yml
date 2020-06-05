@@ -1,0 +1,13 @@
+---
+
+emitter: enum('telegram')
+
+telegram:
+  token: str()
+  chatid: int()
+
+opnsense:
+  host: any(ip(), str())
+  self_signed: bool()
+  api_key: str()
+  api_secret: str()
