@@ -2,13 +2,12 @@
 
 emitter: telegram
 
-emitters:
-  - telegram:
-    token:
-    chatid:
+telegram:
+  token:
+  chatid:
 
 opnsense:
   host:
-  self_signed: yes
+  self_signed: true
   api_key:
   api_secret:
