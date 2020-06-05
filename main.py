@@ -1,12 +1,40 @@
 #!/usr/bin/env python3
 
 import json
+import sys
+import pprint
+
 import requests
-import pyyaml
+import yaml
+import yamale
+import pdb
+
+def validate_conf(schema_file, config_file):
+    schema_yamale = yamale.make_schema(schema_file)
+    config_yamale = yamale.make_data(config_file)
+
+    try:
+        yamale.validate(schema_yamale, config_yamale)
+    except ValueError as e:
+        for r in e.results:
+            for err in r.errors:
+                print(f"[ERROR] {err}")
+        sys.exit(1)
+
+validate_conf('schema.yml', 'config.yml')
+
+with open('config.yml') as f:
+    conf = yaml.safe_load(f)
+
+host = conf['opnsense']['host']
+verify = conf['opnsense']['self_signed']
+api_key = conf['opnsense']['api_key']
+api_secret = conf['opnsense']['api_secret']
 
 url = 'https://' + host + '/api/core/firmware/status'
 
-r = requests.get(url,verify=True,auth=(api_key, api_secret))
+r = requests.get(url,verify=verify,auth=(api_key, api_secret))
+
 if r.status_code == 200:
     response = json.loads(r.text)
     if response['status'] == 'ok':
