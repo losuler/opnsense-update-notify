@@ -45,15 +45,14 @@ The configuration file `config.yml` has three main sections (see `config.yml.exa
 emitter: telegram
 ```
 
-The `emitter` refers to one of the emitters in `emitters`. 
+The `emitter` refers to one of the message services. 
 
 ---
 
 ```yaml
-emitters:
-  - telegram:
-    token:
-    chatid:
+telegram:
+  token:
+  chatid:
 ```
 
 `token` is the token for the Telegram bot, which is provided by creating a bot by following the steps provided in the [Telegram bot API documentation](https://core.telegram.org/bots#3-how-do-i-create-a-bot).
