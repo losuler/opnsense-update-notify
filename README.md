@@ -75,6 +75,6 @@ opnsense:
 
 `host` is either the ip address or hostname of the OPNsense web interface.
 
-`self_signed` refers to whether the TLS certificate is self signed or not, it maybe be either `yes` or `no`. Since OPNsense creates it's own self signed cert by default, the default for this value is `yes`.
+`self_signed` refers to whether the TLS certificate is self signed or not, it maybe be either `true` or `false`. Since OPNsense creates it's own self signed cert by default, the default for this value is `true`.
 
 `api_key` and `api_secret` refers to the values provided in step 5 of the [Setup](#setup) section above.
