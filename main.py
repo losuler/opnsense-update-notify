@@ -72,6 +72,7 @@ with open('config.yml') as f:
     conf = yaml.safe_load(f)
 
 host       = conf['opnsense']['host']
+# This means don't verify if self signed
 verify     = not conf['opnsense']['self_signed']
 api_key    = conf['opnsense']['api_key']
 api_secret = conf['opnsense']['api_secret']
