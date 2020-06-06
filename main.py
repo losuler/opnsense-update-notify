@@ -2,12 +2,10 @@
 
 import json
 import sys
-import pprint
 
 import requests
 import yaml
 import yamale
-import pdb
 
 def valid_conf(schema_file, config_file):
     schema_yamale = yamale.make_schema(schema_file)
