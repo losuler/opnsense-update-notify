@@ -85,5 +85,4 @@ if r.status_code == 200:
     message = parse_res(res)
     print(message)
 else:
-    print ('Connection/Authentication issue, response received:')
-    print(res.text)
+    print(f'[ERROR] {res.text}')
