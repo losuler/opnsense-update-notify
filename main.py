@@ -72,7 +72,7 @@ with open('config.yml') as f:
     conf = yaml.safe_load(f)
 
 host       = conf['opnsense']['host']
-verify     = conf['opnsense']['self_signed']
+verify     = not conf['opnsense']['self_signed']
 api_key    = conf['opnsense']['api_key']
 api_secret = conf['opnsense']['api_secret']
 
