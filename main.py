@@ -78,10 +78,10 @@ api_secret = conf['opnsense']['api_secret']
 
 url = 'https://' + host + '/api/core/firmware/status'
 
-res = requests.get(url,verify=verify,auth=(api_key, api_secret))
+r = requests.get(url,verify=verify,auth=(api_key, api_secret))
 
-if res.status_code == 200:
-    response = json.loads(r.text)
+if r.status_code == 200:
+    res = json.loads(r.text)
     message = parse_res(res)
 else:
     print ('Connection/Authentication issue, response received:')
