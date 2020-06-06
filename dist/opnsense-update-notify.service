@@ -1,11 +1,12 @@
 [Unit]
 Description=An update notification script for OPNsense.
+Wants=opnsense-update-notify.timer
 After=network-online.target
 Requires=network-online.target
 
 [Service]
 WorkingDirectory=/etc/opnsense-update-notify
-ExecStart=/usr/bin/opnsense-update-notify.py
+ExecStart=/usr/bin/python3 /usr/bin/opnsense-update-notify
 Restart=always
 
 [Install]

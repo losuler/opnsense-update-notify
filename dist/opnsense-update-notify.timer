@@ -1,0 +1,12 @@
+[Unit]
+Description=Run opnsense-update-notify at 3:00 AM
+Requires=opnsense-update-notify.service
+
+[Timer]
+Unit=opnsense-update-notify.service
+Persistent=true
+OnCalendar=*-*-* 03:00:00
+RandomizedDelaySec=15m
+
+[Install]
+WantedBy=timers.target
