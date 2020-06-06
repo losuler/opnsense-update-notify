@@ -9,7 +9,7 @@ import yaml
 import yamale
 import pdb
 
-def validate_conf(schema_file, config_file):
+def valid_conf(schema_file, config_file):
     schema_yamale = yamale.make_schema(schema_file)
     config_yamale = yamale.make_data(config_file)
 
@@ -21,7 +21,7 @@ def validate_conf(schema_file, config_file):
                 print(f"[ERROR] {err}")
         sys.exit(1)
 
-validate_conf('schema.yml', 'config.yml')
+valid_conf('schema.yml', 'config.yml')
 
 with open('config.yml') as f:
     conf = yaml.safe_load(f)
