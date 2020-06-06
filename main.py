@@ -83,6 +83,7 @@ r = requests.get(url,verify=verify,auth=(api_key, api_secret))
 if r.status_code == 200:
     res = json.loads(r.text)
     message = parse_res(res)
+    print(message)
 else:
     print ('Connection/Authentication issue, response received:')
     print(res.text)
