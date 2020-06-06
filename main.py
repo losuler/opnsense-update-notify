@@ -4,6 +4,7 @@ import json
 import sys
 
 import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import yaml
 import yamale
 
@@ -66,13 +67,15 @@ def parse_res(res):
         if response['upgrade_needs_reboot'] == '1':
             message += 'This requires a reboot'
 
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
 valid_conf('schema.yml', 'config.yml')
 
 with open('config.yml') as f:
     conf = yaml.safe_load(f)
 
 host       = conf['opnsense']['host']
-# This means don't verify if self signed
+# verify is false if self signed
 verify     = not conf['opnsense']['self_signed']
 api_key    = conf['opnsense']['api_key']
 api_secret = conf['opnsense']['api_secret']
