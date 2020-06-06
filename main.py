@@ -19,6 +19,53 @@ def valid_conf(schema_file, config_file):
                 print(f"[ERROR] {err}")
         sys.exit(1)
 
+def parse_res(res):
+    if res['status'] == 'ok' and res['update'] > 0:
+        message += 'OPNsense Updates Available\n'
+        message += f"Packages to download: {response['updates']}\n"
+        message += f"Download size:{response['download_size']}\n"
+
+        new_pkgs = response['new_packages']
+
+        if len(new_pkgs) > 0:
+            message += 'New:\n'
+
+            if type(new_pkgs) == dict:
+                for pkg in new_pkgs:
+                    message += f"{new_pkgs[pkg]['name']} {new_pkgs[pkg]['version']}\n"
+            else:
+                for pkg in new_pkgs:
+                    message += f"{pkg['name']} {pkg['version']}\n"
+
+        upg_pkgs = response['upgrade_packages']
+
+        if len(upg_pkgs) > 0:
+            message += 'Upgrade:\n'
+
+            if type(upg_pkgs) == dict:
+                for pkg in upg_pkgs:
+                    message += f"{new_pkgs[pkg]['name']} from {new_pkgs[pkg]['current_version']}" + \
+                        f"to {new_pkgs[pkg]['new_version']}\n"
+            else:
+                for pkg in upg_pkgs:
+                    message += f"{pkg['name']} from {pkg['current_version']}" + \
+                        f"to {pkg['new_version']}\n"
+
+        reinst_pkgs = response['reinstall_packages']
+
+        if len(reinst_pkgs) > 0:
+            message += 'Reinstall:\n'
+
+            if type(reinst_pkgs) == dict:
+                for pkg in reinst_pkgs:
+                    message += f"{new_pkgs[pkg]['name']} {new_pkgs[pkg]['version']}\n"
+            else:
+                for pkg in reinst_pkgs:
+                    message += f"{pkg['name']} {pkg['version']}\n"
+
+        if response['upgrade_needs_reboot'] == '1':
+            message += 'This requires a reboot'
+
 valid_conf('schema.yml', 'config.yml')
 
 with open('config.yml') as f:
@@ -31,43 +78,11 @@ api_secret = conf['opnsense']['api_secret']
 
 url = 'https://' + host + '/api/core/firmware/status'
 
-r = requests.get(url,verify=verify,auth=(api_key, api_secret))
+res = requests.get(url,verify=verify,auth=(api_key, api_secret))
 
-if r.status_code == 200:
+if res.status_code == 200:
     response = json.loads(r.text)
-    if response['status'] == 'ok':
-        message += '<h2>Firewall Updates Available</h2>'
-        message += '<br>The firewall has %s' % response['updates'] + ' update(s) available, totalling %s' % response['download_size'] + '<br>\r\n'
-        nps = response['new_packages']
-        if len(nps) > 0:
-            message += '\r\n<br><b>New:</b><br>\r\n'
-            if type(nps) == dict:
-                for n in nps:
-                    message += nps[n]['name'] + ' version ' + nps[n]['version'] + '<br>\r\n'
-            else:
-                for n in nps:
-                    message += n['name'] + ' version ' + n['version'] + '<br>\r\n'
-        ups = response['upgrade_packages']
-        if len(ups) > 0:
-            message += '\r\n<br><b>Upgrade:</b><br>\r\n'
-            if type(ups) == dict:
-                for u in ups:
-                    message += ups[u]['name'] + ' from ' + ups[u]['current_version'] + ' to ' + ups[u]['new_version'] + '<br>\r\n'
-            else:
-                for u in ups:
-                    message += u['name'] + ' from ' + u['current_version'] + ' to ' + u['new_version'] + '<br>\r\n'
-        rps = response['reinstall_packages']
-        if len(rps) > 0:
-            message += '\r\n<br><b>Reinstall:</b><br>\r\n'
-            if type(rps) == dict:
-                for r in rps:
-                    message += rps[r]['name'] + ' version ' + rps[r]['version'] + '<br>\r\n'
-            else:
-                for r in rps:
-                    message += r['name'] + ' version ' + r['version'] + '<br>\r\n'
-        message += '<br>Click <a href=\"https://' + host + '/ui/core/firmware/\">here</a> to fetch them.<br>\r\n'
-        if response['upgrade_needs_reboot'] == '1':
-            message += '<h3>This requires a reboot</h3>'
+    message = parse_res(res)
 else:
-    print ('Connection / Authentication issue, response received:')
-    print r.text
+    print ('Connection/Authentication issue, response received:')
+    print(res.text)
