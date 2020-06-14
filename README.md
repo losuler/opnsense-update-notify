@@ -61,7 +61,7 @@ opnsense:
 emitter: telegram
 ```
 
-The `emitter` refers to one of the message services. 
+The `emitter` refers to one of the message services listed in the subsections below (only Telegram for now). 
 
 #### Telegram
 
