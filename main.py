@@ -99,7 +99,7 @@ if r.status_code == 200:
     if message != None:
         send_telegram(message, t_chatid, t_token)
     else:
-        print('There is nothing to update.')
+        print('[INFO] There is nothing to update.')
 
 else:
     print(f'[ERROR] {res.text}')
