@@ -44,7 +44,7 @@ The configuration file `config.yml` has three main sections (see `config.yml.exa
 ```yaml
 opnsense:
   host:
-  self_signed: yes
+  self_signed: true
   api_key:
   api_secret:
 ```
