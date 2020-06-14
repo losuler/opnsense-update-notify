@@ -39,7 +39,7 @@ It's recommended to create a user with access restricted to the API endpoints re
 
 The configuration file `config.yml` has three main sections (see `config.yml.example`). The already filled in values in the example config are the defaults.
 
----
+### Emitters
 
 ```yaml
 emitter: telegram
@@ -47,7 +47,7 @@ emitter: telegram
 
 The `emitter` refers to one of the message services. 
 
----
+#### Telegram
 
 ```yaml
 telegram:
@@ -63,7 +63,7 @@ telegram:
 curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates | python -m json.tool
 ```
 
----
+### OPNsense
 
 ```yaml
 opnsense:
