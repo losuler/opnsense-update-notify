@@ -39,6 +39,22 @@ It's recommended to create a user with access restricted to the API endpoints re
 
 The configuration file `config.yml` has three main sections (see `config.yml.example`). The already filled in values in the example config are the defaults.
 
+### OPNsense
+
+```yaml
+opnsense:
+  host:
+  self_signed: yes
+  api_key:
+  api_secret:
+```
+
+`host` is either the ip address or hostname of the OPNsense web interface.
+
+`self_signed` refers to whether the TLS certificate is self signed or not, it maybe be either `true` or `false`. Since OPNsense creates it's own self signed cert by default, the default for this value is `true`.
+
+`api_key` and `api_secret` refers to the values provided in step 5 of the [Setup](#setup) section above.
+
 ### Emitters
 
 ```yaml
@@ -62,19 +78,3 @@ telegram:
 ```sh
 curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates | python -m json.tool
 ```
-
-### OPNsense
-
-```yaml
-opnsense:
-  host:
-  self_signed: yes
-  api_key:
-  api_secret:
-```
-
-`host` is either the ip address or hostname of the OPNsense web interface.
-
-`self_signed` refers to whether the TLS certificate is self signed or not, it maybe be either `true` or `false`. Since OPNsense creates it's own self signed cert by default, the default for this value is `true`.
-
-`api_key` and `api_secret` refers to the values provided in step 5 of the [Setup](#setup) section above.
