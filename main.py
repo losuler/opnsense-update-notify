@@ -67,6 +67,11 @@ def parse_res(res):
         if response['upgrade_needs_reboot'] == '1':
             message += 'This requires a reboot'
 
+def send_telegram(msg, chatid, token):
+    url = f'https://api.telegram.org/bot{token}/sendMessage?text{msg}&chat_id={chatid}'
+    r = requests.get(url)
+    return r
+
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 valid_conf('schema.yml', 'config.yml')
@@ -80,6 +85,9 @@ verify     = not conf['opnsense']['self_signed']
 api_key    = conf['opnsense']['api_key']
 api_secret = conf['opnsense']['api_secret']
 
+t_chatid = conf['telegram']['chatid']
+t_token = conf['telegram']['token']
+
 url = 'https://' + host + '/api/core/firmware/status'
 
 r = requests.get(url,verify=verify,auth=(api_key, api_secret))
@@ -87,6 +95,11 @@ r = requests.get(url,verify=verify,auth=(api_key, api_secret))
 if r.status_code == 200:
     res = json.loads(r.text)
     message = parse_res(res)
-    print(message)
+
+    if message != None:
+        send_telegram(message, t_chatid, t_token)
+    else:
+        print('There is nothing to update.')
+
 else:
     print(f'[ERROR] {res.text}')
