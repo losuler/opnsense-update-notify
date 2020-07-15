@@ -68,7 +68,7 @@ def parse_res(res):
             message += 'This requires a reboot'
 
 def send_telegram(msg, chatid, token):
-    url = f'https://api.telegram.org/bot{token}/sendMessage?text{msg}&chat_id={chatid}'
+    url = f'https://api.telegram.org/bot{token}/sendMessage?text={msg}&chat_id={chatid}'
     r = requests.get(url)
     return r
 
