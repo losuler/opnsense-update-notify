@@ -67,6 +67,8 @@ def parse_res(resp):
         if resp['upgrade_needs_reboot'] == '1':
             message += 'This requires a reboot'
 
+        return message
+
 def send_telegram(msg, chatid, token):
     url = f'https://api.telegram.org/bot{token}/sendMessage?text={msg}&chat_id={chatid}'
     r = requests.get(url)
