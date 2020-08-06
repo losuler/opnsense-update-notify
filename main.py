@@ -20,13 +20,13 @@ def valid_conf(schema_file, config_file):
                 print(f"[ERROR] {err}")
         sys.exit(1)
 
-def parse_res(res):
-    if res['status'] == 'ok' and int(res['updates']) > 0:
+def parse_res(resp):
+    if resp['status'] == 'ok' and int(resp['updates']) > 0:
         message += 'OPNsense Updates Available\n'
-        message += f"Packages to download: {response['updates']}\n"
-        message += f"Download size:{response['download_size']}\n"
+        message += f"Packages to download: {resp['updates']}\n"
+        message += f"Download size:{resp['download_size']}\n"
 
-        new_pkgs = response['new_packages']
+        new_pkgs = resp['new_packages']
 
         if len(new_pkgs) > 0:
             message += 'New:\n'
@@ -38,7 +38,7 @@ def parse_res(res):
                 for pkg in new_pkgs:
                     message += f"{pkg['name']} {pkg['version']}\n"
 
-        upg_pkgs = response['upgrade_packages']
+        upg_pkgs = resp['upgrade_packages']
 
         if len(upg_pkgs) > 0:
             message += 'Upgrade:\n'
@@ -52,7 +52,7 @@ def parse_res(res):
                     message += f"{pkg['name']} from {pkg['current_version']}" + \
                         f"to {pkg['new_version']}\n"
 
-        reinst_pkgs = response['reinstall_packages']
+        reinst_pkgs = resp['reinstall_packages']
 
         if len(reinst_pkgs) > 0:
             message += 'Reinstall:\n'
@@ -64,7 +64,7 @@ def parse_res(res):
                 for pkg in reinst_pkgs:
                     message += f"{pkg['name']} {pkg['version']}\n"
 
-        if response['upgrade_needs_reboot'] == '1':
+        if resp['upgrade_needs_reboot'] == '1':
             message += 'This requires a reboot'
 
 def send_telegram(msg, chatid, token):
