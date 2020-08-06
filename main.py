@@ -21,7 +21,7 @@ def valid_conf(schema_file, config_file):
         sys.exit(1)
 
 def parse_res(res):
-    if res['status'] == 'ok' and res['updates'] > 0:
+    if res['status'] == 'ok' and int(res['updates']) > 0:
         message += 'OPNsense Updates Available\n'
         message += f"Packages to download: {response['updates']}\n"
         message += f"Download size:{response['download_size']}\n"
