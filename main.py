@@ -76,6 +76,11 @@ def parse_res(resp):
             message += 'OPNsense Major Upgrade Available\n'
         message += f"{resp['upgrade_major_version']} from {resp['product_version']}"
 
+    try:
+        message
+    except NameError:
+        message = None
+
     return message
 
 def send_telegram(msg, chatid, token):
@@ -110,7 +115,7 @@ if r.status_code == 200:
     if message != None:
         send_telegram(message, t_chatid, t_token)
     else:
-        print('[INFO] There is nothing to update.')
+        print('[INFO] There are no updates or major upgrades available')
 
 else:
     print(f'[ERROR] {res.text}')
