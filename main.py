@@ -21,7 +21,7 @@ def valid_conf(schema_file, config_file):
         sys.exit(1)
 
 def parse_res(resp):
-    if resp['status'] == 'ok' and int(resp['updates']) > 0:
+    if int(resp['updates']) > 0:
         message = 'OPNsense Updates Available\n'
         message += f"Packages to download: {resp['updates']}\n"
         message += f"Download size:{resp['download_size']}\n"
@@ -65,9 +65,18 @@ def parse_res(resp):
                     message += f"{pkg['name']} {pkg['version']}\n"
 
         if resp['upgrade_needs_reboot'] == '1':
-            message += 'This requires a reboot'
+            message += 'This requires a reboot\n'
 
-        return message
+    if resp['upgrade_major_version'] != '':
+        try:
+            message
+        except NameError:
+            message = 'OPNsense Major Upgrade Available\n'
+        else:
+            message += 'OPNsense Major Upgrade Available\n'
+        message += f"{resp['upgrade_major_version']} from {resp['product_version']}"
+
+    return message
 
 def send_telegram(msg, chatid, token):
     url = f'https://api.telegram.org/bot{token}/sendMessage?text={msg}&chat_id={chatid}'
